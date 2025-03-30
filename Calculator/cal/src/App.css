@@ -1,0 +1,8 @@
+.calculator-container {
+  width: 250px;
+  margin: 50px auto;
+  text-align: center;
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 10px;
+}
