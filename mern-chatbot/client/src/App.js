@@ -6,7 +6,7 @@ const App = () => {
   const [backend,setBackend] = useState("");
 
  useEffect(()=>{
-      axios.get('http://localhost:5002')
+      axios.get('http://localhost:5002 ')
       .then(res => setBackend(res.data))
       .catch(err => console.error(err));
  },[]); 
