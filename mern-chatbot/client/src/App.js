@@ -5,11 +5,14 @@ import './App.css';
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false); 
 
   const handleSend = async () => {
     if (!input.trim()) return;
 
     setMessages(prev => [...prev, { sender: "user", text: input }]);
+
+    setIsTyping(true); 
 
     try {
       const res = await axios.post("http://localhost:5002/chat", {
@@ -22,6 +25,7 @@ const App = () => {
     }
 
     setInput("");
+    setIsTyping(false); 
   };
 
   const handleKeyDown = (e) => {
@@ -31,19 +35,8 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="chat-container">
       <h1>ChatBot</h1>
-
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Type your message..."
-      />
-
-      <button onClick={handleSend} disabled={!input.trim()}>
-        Send
-      </button>
 
       <div className="chat-box">
         {messages.map((msg, index) => (
@@ -51,6 +44,20 @@ const App = () => {
             {msg.text}
           </div>
         ))}
+        {isTyping && <div className="typing-indicator"></div>} 
+      </div>
+
+      <div className="input-container">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Type your message..."
+        />
+        <button onClick={handleSend} disabled={!input.trim()}>
+          Send
+        </button>
       </div>
     </div>
   );
