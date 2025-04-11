@@ -108,3 +108,37 @@ button:disabled {
 .chat-box {
   transition: all 0.3s ease;
 }
+
+.chat-container.light {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.chat-container.dark {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+}
+
+
+.chat-container.light .user {
+  background-color: #cce5ff;
+}
+
+.chat-container.dark .user {
+  background-color: #37474f;
+}
+
+.chat-container.light .bot {
+  background-color: #e8e8e8;
+}
+
+.chat-container.dark .bot {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+.theme-toggle {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
