@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css'; 
 
@@ -6,6 +6,17 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false); 
+
+  useEffect(()=>{
+    const savedMessages =  localStorage.getItem("chatMessages");
+
+    if(savedMessages){
+      setMessages(JSON.parse(savedMessages));
+    }
+  },[]);
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
