@@ -6,6 +6,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false); 
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(()=>{
     const savedMessages =  localStorage.getItem("chatMessages");
@@ -17,6 +18,9 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
+  useEffect(() => {
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -46,16 +50,22 @@ const App = () => {
   };
 
   return (
-    <div className="chat-container">
+    <div className={`chat-container ${darkMode ? 'dark' : 'light'}`}>
+      <div className="theme-toggle">
+        <button onClick={() => setDarkMode(prev => !prev)}>
+          {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+        </button>
+      </div>
+
       <h1>ChatBot</h1>
 
       <div className="chat-box">
-        {messages.map((msg, index) => (
-          <div key={index} className={msg.sender}>
+        {messages.map((msg, i) => (
+          <div key={i} className={msg.sender}>
             {msg.text}
           </div>
         ))}
-        {isTyping && <div className="typing-indicator"></div>} 
+        {isTyping && <div className="typing-indicator"></div>}
       </div>
 
       <div className="input-container">
