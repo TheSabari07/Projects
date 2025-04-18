@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const mongoose = require('mongoose');
-const Message = require('./models/Message.js ')
+const Message = require('./models/Message.js')
 const authRoutes = require('./routes/auth');
 
 
