@@ -5,8 +5,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; 
+  overflow: hidden; 
+  width: 100vw; 
 }
+
 
 h1 {
   text-align: center;
@@ -24,10 +27,13 @@ h1 {
 }
 
 .chat-box {
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
   margin-bottom: 15px;
+  transition: all 0.3s ease;
+  scroll-behavior: smooth;
 }
+
 
 .user {
   background-color: #3b82f6;
@@ -139,3 +145,4 @@ button:disabled {
   text-align: right;
   margin-bottom: 10px;
 }
+

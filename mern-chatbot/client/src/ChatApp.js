@@ -8,16 +8,22 @@ const ChatApp = () => {
   const [isTyping, setIsTyping] = useState(false); 
   const [darkMode, setDarkMode] = useState(false);
 
-  useEffect(()=>{
-    const savedMessages =  localStorage.getItem("chatMessages");
+  useEffect(() => {
+    const savedMessages = localStorage.getItem("chatMessages");
+    const savedTheme = localStorage.getItem("theme");
 
-    if(savedMessages){
+    if (savedMessages) {
       setMessages(JSON.parse(savedMessages));
     }
-  },[]);
+    if (savedTheme) {
+      setDarkMode(savedTheme === "dark");
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
+
   useEffect(() => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
@@ -48,6 +54,15 @@ const ChatApp = () => {
       handleSend();
     }
   };
+
+  const scrollToBottom = () => {
+    const chatBox = document.querySelector('.chat-box');
+    chatBox.scrollTop = chatBox.scrollHeight;
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className={`chat-container ${darkMode ? 'dark' : 'light'}`}>
