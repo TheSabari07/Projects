@@ -6,13 +6,13 @@ import ChatApp from './ChatApp.js';
 
 function App() {
   return (
-    <Router>
+    
       <Routes>
         <Route path="/" element={<ChatApp />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-    </Router>
+    
   );
 }
 
