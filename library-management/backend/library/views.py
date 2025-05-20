@@ -76,3 +76,21 @@ class BookDetailView(APIView):
 
         book.delete()
         return Response({"message": "Book deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request, pk):
+        try:
+            object_id = ObjectId(pk)
+        except Exception:
+            raise Http404("Invalid book ID format")
+
+        book = Book.objects(id=object_id).first()
+        if not book:
+            raise Http404("Book not found")
+
+        copies = request.data.get("copies")
+        if copies is not None and isinstance(copies, int):
+            book.copies = copies
+            book.save()
+            return Response({"message": "Copies updated successfully"}, status=200)
+
+        return Response({"error": "Invalid copies value"}, status=400)
