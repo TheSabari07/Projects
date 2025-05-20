@@ -19,6 +19,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('api/', include('library.urls')),  # ← updated to match app name
+    path('admin/', admin.site.urls),
+    path('api/', include('library.urls')),  # ✅ correct app name
 ]
-
