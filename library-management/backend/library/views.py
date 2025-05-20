@@ -63,6 +63,7 @@ class BorrowBookView(APIView):
 
         return Response({"message": "Book borrowed successfully"}, status=201)
 
+# 🔍 Book Detail (Delete + Update)
 class BookDetailView(APIView):
     def delete(self, request, pk):
         try:
@@ -87,10 +88,21 @@ class BookDetailView(APIView):
         if not book:
             raise Http404("Book not found")
 
-        copies = request.data.get("copies")
-        if copies is not None and isinstance(copies, int):
-            book.copies = copies
-            book.save()
-            return Response({"message": "Copies updated successfully"}, status=200)
+        data = request.data
 
-        return Response({"error": "Invalid copies value"}, status=400)
+        # Safely update fields
+        if "title" in data and isinstance(data["title"], str):
+            book.title = data["title"].strip()
+
+        if "author" in data and isinstance(data["author"], str):
+            book.author = data["author"].strip()
+
+        if "copies" in data:
+            copies = data["copies"]
+            if isinstance(copies, int) and copies >= 0:
+                book.copies = copies
+            else:
+                return Response({"error": "Invalid copies value"}, status=400)
+
+        book.save()
+        return Response({"message": "Book updated successfully"}, status=200)
