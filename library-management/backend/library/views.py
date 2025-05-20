@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Book, Member, Borrow
 from .serializers import BookSerializer, MemberSerializer, BorrowSerializer
+from bson import ObjectId
+from django.http import Http404
 import datetime
 
 # 📚 Book API (List + Create)
@@ -60,3 +62,17 @@ class BorrowBookView(APIView):
         book.save()
 
         return Response({"message": "Book borrowed successfully"}, status=201)
+
+class BookDetailView(APIView):
+    def delete(self, request, pk):
+        try:
+            object_id = ObjectId(pk)
+        except Exception:
+            raise Http404("Invalid book ID format")
+
+        book = Book.objects(id=object_id).first()
+        if not book:
+            raise Http404("Book not found")
+
+        book.delete()
+        return Response({"message": "Book deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
