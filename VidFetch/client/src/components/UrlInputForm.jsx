@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 
 const UrlInputForm = () => {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!url.trim()) return alert("Please enter a URL.");
     console.log("Submitted URL:", url);
+    setUrl("");
     // TODO: Backend integration
   };
 
   return (
+    
     <form onSubmit={handleSubmit} className="form">
       <input
         type="text"
@@ -20,6 +22,7 @@ const UrlInputForm = () => {
       />
       <button type="submit">Download</button>
     </form>
+
   );
 };
 
