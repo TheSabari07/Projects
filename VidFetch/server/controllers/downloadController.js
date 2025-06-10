@@ -7,26 +7,30 @@ export const handleDownload = async (req, res) => {
 
   try {
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
-      const info = await ytdl.getInfo(url);
-      const formats = ytdl.filterFormats(info.formats, 'videoandaudio');
+      const info = await ytdl.getBasicInfo(url); 
+
+      const formats = info.formats.filter(
+        (f) => f.hasAudio && f.hasVideo && f.url
+      );
 
       const videoData = {
+        platform: "youtube",
         title: info.videoDetails.title,
         thumbnail: info.videoDetails.thumbnails?.pop()?.url,
         lengthSeconds: info.videoDetails.lengthSeconds,
-        formats: formats.map(format => ({
+        formats: formats.map((format) => ({
           quality: format.qualityLabel,
           url: format.url,
           mimeType: format.mimeType,
-        }))
+        })),
       };
 
-      return res.json({ platform: "youtube", ...videoData });
+      return res.json(videoData);
     }
 
-    res.status(400).json({ error: "Only YouTube supported for now" });
+    return res.status(400).json({ error: "Only YouTube is supported for now" });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: error.message || "Internal server error" });
   }
 };
