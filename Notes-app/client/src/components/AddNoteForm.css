@@ -1,0 +1,27 @@
+.add-note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .add-note-form input,
+  .add-note-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .add-note-form button {
+    padding: 10px;
+    border: none;
+    background-color: #0077ff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .add-note-form button:hover {
+    background-color: #005fd1;
+  }
+  
